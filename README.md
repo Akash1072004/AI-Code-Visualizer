@@ -81,27 +81,6 @@ MongoDB Atlas
 ```
 
 ---
-
-# 📸 Screenshots
-
-### Login Page
-
-(Add Screenshot)
-
----
-
-### AI Code Editor
-
-(Add Screenshot)
-
----
-
-### Analysis History
-
-(Add Screenshot)
-
----
-
 # 📂 Folder Structure
 
 ```
@@ -132,7 +111,7 @@ AI-Code-Visualizer
 ## Clone Repository
 
 ```bash
-git clone https://github.com/YOUR_GITHUB_USERNAME/AI-Code-Visualizer.git
+git clone https://github.com/Akash1072004/AI-Code-Visualizer.git
 ```
 
 ## Backend
