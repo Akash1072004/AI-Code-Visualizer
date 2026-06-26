@@ -1,3 +1,6 @@
+const { OAuth2Client } = require("google-auth-library");
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -7,7 +10,6 @@ exports.registerUser = async (req, res) => {
     try {
         const { name, email, password } = req.body;
 
-        // Check all fields
         if (!name || !email || !password) {
             return res.status(400).json({
                 success: false,
@@ -15,7 +17,6 @@ exports.registerUser = async (req, res) => {
             });
         }
 
-        // Check if user already exists
         const existingUser = await User.findOne({ email });
 
         if (existingUser) {
@@ -25,17 +26,14 @@ exports.registerUser = async (req, res) => {
             });
         }
 
-        // Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Create user
         const user = await User.create({
             name,
             email,
             password: hashedPassword,
         });
 
-        // Generate JWT
         const token = jwt.sign(
             { id: user._id },
             process.env.JWT_SECRET,
@@ -54,6 +52,7 @@ exports.registerUser = async (req, res) => {
 
     } catch (error) {
         console.log(error);
+
         res.status(500).json({
             success: false,
             message: "Server Error",
@@ -61,7 +60,7 @@ exports.registerUser = async (req, res) => {
     }
 };
 
-// 👇 Paste the login function here
+// Login User
 exports.loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -114,5 +113,66 @@ exports.loginUser = async (req, res) => {
             success: false,
             message: "Server Error",
         });
+    }
+};
+
+// ================= GOOGLE LOGIN =================
+
+exports.googleLogin = async (req, res) => {
+    try {
+
+        const { credential } = req.body;
+
+        const ticket = await client.verifyIdToken({
+            idToken: credential,
+            audience: process.env.GOOGLE_CLIENT_ID,
+        });
+
+        const payload = ticket.getPayload();
+
+        const { name, email } = payload;
+
+        let user = await User.findOne({ email });
+
+        if (!user) {
+
+            const randomPassword = await bcrypt.hash(
+                Math.random().toString(36),
+                10
+            );
+
+            user = await User.create({
+                name,
+                email,
+                password: randomPassword,
+            });
+
+        }
+
+        const token = jwt.sign(
+            { id: user._id },
+            process.env.JWT_SECRET,
+            { expiresIn: "7d" }
+        );
+
+        res.status(200).json({
+            success: true,
+            token,
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+            },
+        });
+
+    } catch (error) {
+
+        console.log(error);
+
+        res.status(500).json({
+            success: false,
+            message: "Google Login Failed",
+        });
+
     }
 };

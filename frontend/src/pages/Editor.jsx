@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import MonacoEditor from "@monaco-editor/react";
+import Navbar from "../components/Navbar";
 
 function Editor() {
   const navigate = useNavigate();
@@ -35,74 +37,68 @@ function Editor() {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        gap: "20px",
-        padding: "20px",
-      }}
-    >
-      <div style={{ width: "50%" }}>
-        <h2>Code Editor</h2>
+    <>
+      <Navbar />
 
-        <textarea
-          rows="25"
-          style={{
-            width: "100%",
-            fontSize: "16px",
-            padding: "10px",
-          }}
-          placeholder="Paste your code here..."
-          value={code}
-          onChange={(e) => setCode(e.target.value)}
-        />
+      <div className="min-h-screen bg-slate-900 p-8">
+        <div className="max-w-7xl mx-auto">
 
-        <div
-          style={{
-            marginTop: "15px",
-            display: "flex",
-            gap: "10px",
-          }}
-        >
-          <button
-            onClick={analyzeCode}
-            style={{
-              padding: "12px 25px",
-              cursor: "pointer",
-            }}
-          >
-            {loading ? "Analyzing..." : "Analyze"}
-          </button>
+          <h1 className="text-4xl font-bold text-white mb-8">
+            AI Code Visualizer
+          </h1>
 
-          <button
-            onClick={() => navigate("/history")}
-            style={{
-              padding: "12px 25px",
-              cursor: "pointer",
-            }}
-          >
-            History
-          </button>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+            {/* Left Panel */}
+            <div className="bg-gray-800 rounded-2xl shadow-xl p-5">
+
+              <h2 className="text-2xl font-semibold text-white mb-5">
+                Code Editor
+              </h2>
+
+              <MonacoEditor
+                height="500px"
+                defaultLanguage="cpp"
+                theme="vs-dark"
+                value={code}
+                onChange={(value) => setCode(value || "")}
+              />
+
+              <div className="flex gap-4 mt-6">
+
+                <button
+                  onClick={analyzeCode}
+                  className="bg-blue-600 hover:bg-blue-700 transition px-8 py-3 rounded-lg text-white font-semibold"
+                >
+                  {loading ? "Analyzing..." : "🚀 Analyze"}
+                </button>
+
+              </div>
+
+            </div>
+
+            {/* Right Panel */}
+            <div className="bg-gray-800 rounded-2xl shadow-xl p-6">
+
+              <h2 className="text-2xl font-semibold text-white mb-5">
+                AI Analysis
+              </h2>
+
+              <div className="bg-black rounded-xl p-5 h-[570px] overflow-y-auto">
+
+                <pre className="text-green-400 whitespace-pre-wrap leading-7">
+                  {analysis || "🤖 AI analysis will appear here after clicking Analyze."}
+                </pre>
+
+              </div>
+
+            </div>
+
+          </div>
+
         </div>
       </div>
-
-      <div
-        style={{
-          width: "50%",
-          whiteSpace: "pre-wrap",
-          background: "#111",
-          color: "white",
-          padding: "20px",
-          borderRadius: "10px",
-          overflowY: "auto",
-          maxHeight: "700px",
-        }}
-      >
-        <h2>AI Response</h2>
-
-        {analysis || "Your AI analysis will appear here..."}
-      </div>
-    </div>
+    </>
   );
 }
 

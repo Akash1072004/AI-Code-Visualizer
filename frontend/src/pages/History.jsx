@@ -1,68 +1,90 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Navbar from "../components/Navbar";
 
 function History() {
-  const [history, setHistory] = useState([]);
+    const [history, setHistory] = useState([]);
 
-  useEffect(() => {
-    fetchHistory();
-  }, []);
+    useEffect(() => {
+        fetchHistory();
+    }, []);
 
-  const fetchHistory = async () => {
-    try {
-      const token = localStorage.getItem("token");
+    const fetchHistory = async () => {
+        try {
+            const token = localStorage.getItem("token");
 
-      const res = await axios.get(
-        "http://localhost:5000/api/history",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+            const res = await axios.get(
+                "http://localhost:5000/api/history",
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            setHistory(res.data.history);
+        } catch (err) {
+            console.log(err);
+            console.log(err.response);
+
+            alert(
+                err.response?.data?.message ||
+                err.response?.data ||
+                err.message
+            );
         }
-      );
+    };
 
-      setHistory(res.data.history);
+    return (
+        <>
+            <Navbar />
 
-    } catch (err) {
-      console.log(err);
-    }
-  };
+            <div className="min-h-screen bg-slate-900 p-8">
+                <div className="max-w-6xl mx-auto">
 
-  return (
-    <div style={{ padding: "30px" }}>
-      <h1>Analysis History</h1>
+                    <h1 className="text-4xl font-bold text-white mb-8">
+                        Analysis History
+                    </h1>
 
-      {
-        history.map((item) => (
+                    {history.length === 0 ? (
+                        <p className="text-gray-400">
+                            No history found.
+                        </p>
+                    ) : (
+                        <div className="space-y-6">
+                            {history.map((item) => (
+                                <div
+                                    key={item._id}
+                                    className="bg-gray-800 p-6 rounded-xl shadow-lg"
+                                >
+                                    <h2 className="text-blue-400 font-semibold mb-3">
+                                        {new Date(item.createdAt).toLocaleString()}
+                                    </h2>
 
-          <div
-            key={item._id}
-            style={{
-              border: "1px solid gray",
-              marginTop: "20px",
-              padding: "20px",
-              borderRadius: "10px",
-            }}
-          >
-            <h3>Code</h3>
+                                    <h3 className="text-white font-bold mb-2">
+                                        Code
+                                    </h3>
 
-            <pre>{item.code}</pre>
+                                    <pre className="bg-black text-green-400 p-4 rounded overflow-x-auto">
+                                        {item.code}
+                                    </pre>
 
-            <h3>Analysis</h3>
+                                    <h3 className="text-white font-bold mt-5 mb-2">
+                                        Analysis
+                                    </h3>
 
-            <pre>{item.analysis}</pre>
+                                    <pre className="bg-black text-white p-4 rounded whitespace-pre-wrap">
+                                        {item.analysis}
+                                    </pre>
+                                </div>
+                            ))}
+                        </div>
+                    )}
 
-            <small>
-              {new Date(item.createdAt).toLocaleString()}
-            </small>
-
-          </div>
-
-        ))
-      }
-
-    </div>
-  );
+                </div>
+            </div>
+        </>
+    );
 }
 
 export default History;

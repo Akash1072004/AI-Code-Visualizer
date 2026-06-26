@@ -10,6 +10,7 @@ const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const analysisRoutes = require("./routes/analysisRoutes");
 const historyRoutes = require("./routes/historyRoutes");
+const adminRoutes = require("./routes/adminRoutes");
 
 connectDB();
 
@@ -22,6 +23,7 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api", analysisRoutes);
 app.use("/api/history", historyRoutes);
+app.use("/api/admin", adminRoutes);
 
 app.get("/", (req, res) => {
   res.send("AI Code Visualizer Backend Running 🚀");
