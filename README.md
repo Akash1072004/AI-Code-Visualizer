@@ -11,6 +11,13 @@
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
 ---
+# 🌐 Live Demo
+
+**Application:** https://ai-code-visualizer-fixuq0g3d-akash-kumar-1072004.vercel.app
+
+Experience the deployed AI Code Visualizer with secure authentication, Google OAuth, AI-powered code analysis, and analysis history.
+
+---
 
 ## 📌 Overview
 
@@ -55,13 +62,16 @@ The project focuses on combining modern web development practices with AI to cre
 
 ## Backend
 
-- Node.js
-- Express.js
-- MongoDB Atlas
-- Mongoose
-- JWT Authentication
-- bcrypt.js
-- Google Gemini API
+* Node.js
+* Express.js
+* MongoDB Atlas
+* Mongoose ODM
+* JWT Authentication
+* bcrypt.js
+* Google Auth Library
+* Google Gemini API
+* CORS
+* dotenv
 
 ---
 
@@ -132,7 +142,29 @@ npm run dev
 
 ---
 
+# 📡 API Endpoints
+
+### Authentication
+
+* `POST /api/auth/register`
+* `POST /api/auth/login`
+* `POST /api/auth/google`
+
+### AI Analysis
+
+* `POST /api/analyze`
+
+### History
+
+* `GET /api/history`
+* `DELETE /api/history/:id`
+
+### Admin
+
+* `GET /api/admin`
+
 # 🔐 Environment Variables
+
 
 ## Backend
 
@@ -217,17 +249,14 @@ Through this project I gained practical experience in:
 
 ---
 
-# 🎯 Career Goal
+# 🚀 Deployment
 
-I am currently focused on becoming a Software Engineer by strengthening my foundations in:
+**Frontend:** Vercel
 
-- Data Structures & Algorithms
-- Competitive Programming
-- Full-Stack Development
-- Artificial Intelligence Integration
-- System Design
+**Backend:** Render
 
-My goal is to build software that is scalable, reliable, and impactful while continuously improving as an engineer through real-world projects and problem solving.
+**Database:** MongoDB Atlas
+
 
 ---
 
