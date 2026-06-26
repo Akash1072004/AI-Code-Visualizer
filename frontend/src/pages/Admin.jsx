@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+const API = import.meta.env.VITE_API_URL;
+
 function Admin() {
   const [data, setData] = useState(null);
 
@@ -10,9 +12,9 @@ function Admin() {
 
   const fetchDashboard = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/admin/dashboard");
+      const res = await axios.get(`${API}/api/admin/dashboard`);
       setData(res.data);
-    } catch (err) {
+    } catch (err) { 
       console.log(err);
     }
   };

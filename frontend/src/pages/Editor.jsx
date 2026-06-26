@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import MonacoEditor from "@monaco-editor/react";
 import Navbar from "../components/Navbar";
+const API = import.meta.env.VITE_API_URL;
 
 function Editor() {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ function Editor() {
       const token = localStorage.getItem("token");
 
       const res = await axios.post(
-        "http://localhost:5000/api/analyze",
+        `${API}/api/analyze`,
         { code },
         {
           headers: {

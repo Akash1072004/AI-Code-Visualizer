@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "../components/Navbar";
+const API = import.meta.env.VITE_API_URL;
 
 function History() {
     const [history, setHistory] = useState([]);
@@ -14,7 +15,7 @@ function History() {
             const token = localStorage.getItem("token");
 
             const res = await axios.get(
-                "http://localhost:5000/api/history",
+                `${API}/api/history`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
