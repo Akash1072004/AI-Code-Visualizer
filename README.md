@@ -14,6 +14,7 @@
 # 🌐 Live Demo
 
 **Application:** https://ai-code-visualizer-ten.vercel.app/
+
 Experience the deployed AI Code Visualizer with secure authentication, Google OAuth, AI-powered code analysis, and analysis history.
 
 ---
