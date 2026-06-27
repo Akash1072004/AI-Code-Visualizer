@@ -21,8 +21,9 @@ const app = express();
 app.use(
   cors({
     origin: [
-      "http://localhost:5173",
-      "https://ai-code-visualizer-fixuq0g3d-akash-kumar-1072004.vercel.app",
+      "http://localhost:5173", // Keeps local development working
+      "https://ai-code-visualizer-fixuq0g3d-akash-kumar-1072004.vercel.app", // Your preview URL
+      "https://ai-code-visualizer-ten.vercel.app" // Your LIVE Vercel URL added here
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
