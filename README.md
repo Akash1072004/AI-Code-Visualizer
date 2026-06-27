@@ -13,8 +13,7 @@
 ---
 # 🌐 Live Demo
 
-**Application:** https://ai-code-visualizer-fixuq0g3d-akash-kumar-1072004.vercel.app
-
+**Application:** https://ai-code-visualizer-ten.vercel.app/
 Experience the deployed AI Code Visualizer with secure authentication, Google OAuth, AI-powered code analysis, and analysis history.
 
 ---
